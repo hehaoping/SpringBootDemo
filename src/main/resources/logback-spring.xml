@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<!-- 文件输出格式 -->
+    <property name="pattern" value="%d{yyyy-MM-dd HH:mm:ss} [%thread] -%-5level %logger{36} %msg%n" />
+	<!-- test文件路径 -->
+	<property name="log.path.file" value="d:/appdata/logs/out.log" />
+	<property name="log.path" value="d:/appdata/logs" />
+	<!-- pro文件路径 -->
+
+	<!-- 控制台 -->
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>${pattern}</pattern>
+		</encoder>
+	</appender>
+	
+	<!--输出到文件-->
+    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.path.file}</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.path}/%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${pattern}</pattern>
+        </encoder>
+    </appender>
+	
+	<root level="warn">
+           <appender-ref ref="console" />
+           <appender-ref ref="file" />
+    </root>
+    
+     <logger name="com.naruto" level="info" additivity="false">
+        <appender-ref ref="console"/>
+        <appender-ref ref="file" />
+    </logger>
+    
+</configuration>

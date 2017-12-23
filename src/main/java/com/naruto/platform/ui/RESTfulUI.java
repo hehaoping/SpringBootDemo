@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.naruto.platform.util.LogUtil;
 
 /**
  * @author hhp
@@ -19,6 +20,8 @@ public class RESTfulUI {
 
 	@RequestMapping(value = "/api/infos", method = RequestMethod.GET)
 	public String list(@RequestParam(defaultValue = "15") int pageSize, @RequestParam(defaultValue = "") String key) {
+		LogUtil log = new LogUtil();
+		log.info("日志输出info级别");
 		return key + " a get list request " + pageSize;
 	}
 
@@ -46,20 +49,19 @@ public class RESTfulUI {
 	public String getOrPost() {
 		return "a getOrPost request";
 	}
-	
-	
+
 	@RequestMapping(value = "/api/json", method = RequestMethod.GET)
 	public JSONObject getJson() {
-		JSONObject jo=new JSONObject();
+		JSONObject jo = new JSONObject();
 		jo.put("status", 1);
 		jo.put("message", "返回json对象");
 		return jo;
 	}
-	
+
 	@RequestMapping(value = "/api/jsonarray", method = RequestMethod.GET)
 	public JSONArray getJSONArray() {
-		JSONArray ja=new JSONArray();
-		JSONObject jo=new JSONObject();
+		JSONArray ja = new JSONArray();
+		JSONObject jo = new JSONObject();
 		jo.put("name", "hhp");
 		jo.put("age", 23);
 		ja.add(jo);
