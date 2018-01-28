@@ -4,6 +4,9 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,7 +28,22 @@ public class UserUI {
 	private UserDao userDao;
 
 	@RequestMapping(value = "/api/user")
-	public JSONArray list() {
+	public JSONArray getPageList() {
+		JSONArray ja = new JSONArray();
+		int page = 0;
+		int size = 2;
+		Pageable pageable = new PageRequest(page, size);
+		Page<User> list = userDao.findAll(pageable);
+		for (User user : list) {
+			ja.add(user);
+		}
+		System.out.println("共：" + list.getTotalPages() + "页");
+		System.out.println("共：" + list.getTotalElements() + "条记录");
+		return ja;
+	}
+
+	@RequestMapping(value = "/api/alluser")
+	public JSONArray getAllList() {
 		List<User> list = userDao.findAll();
 		JSONArray ja = new JSONArray();
 		ja.addAll(list);
